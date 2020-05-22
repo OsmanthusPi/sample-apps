@@ -27,7 +27,7 @@ function initialize(settings) {
     setSettings({
         client_id     : settings.client_id,
         secret        : settings.secret,
-        scope         : settings.scope + " launch",
+        scope         : settings.scope + " launch patient/*.read online_access",
         launch_id     : urlParam("launch"),
         api_server_uri: urlParam("iss")
     });
@@ -37,6 +37,11 @@ function initialize(settings) {
 
 function completeAuth() {
     return fetchToken().then(refreshApp);
+}
+
+function handleSessionId(){
+    var sessionId = urlParam("sessionId");
+    // alert("SessionId received: " + sessionId);
 }
 
 function writeData(key, data) {
@@ -155,7 +160,7 @@ function authorize() {
                 "client_id="+settings.client_id+"&"+
                 "response_type=code&"+
                 "scope="+settings.scope+"&"+
-                "redirect_uri="+getRedirectURI() + "&" +
+                "redirect_uri=https://6mlgn68727.execute-api.us-west-2.amazonaws.com/session/initiate/16ukqqgai96b9e8c7iqeaondiu"+getRedirectURI() + "&" +
                 "aud=" + encodeURIComponent(settings.api_server_uri) + "&" +
                 "launch=" + settings.launch_id + "&" +
                 "state=" + state;
